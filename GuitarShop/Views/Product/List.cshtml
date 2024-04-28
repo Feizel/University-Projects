@@ -1,0 +1,57 @@
+﻿@model ProductListViewModel
+@{
+    ViewBag.Title = "Product List";
+}
+
+<h1>Product List</h1>
+<div class="row">
+
+    @*Side menu for categories*@
+    <div class="col-sm-2">
+        <vc:category-menu></vc:category-menu>
+
+        
+    </div>
+
+    <div class="col-sm-10">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        <a asp-action="List"
+                           asp-route-sortBy="@ViewData["NameSortParam"]"
+                           asp-route-id="@Model.SelectedCategory">
+                            Name
+                        </a>
+                    </th>
+                    <th class="text-end">
+                        <a asp-action="List"
+                           asp-route-sortBy="@ViewData["PriceSortParam"]"
+                           asp-route-id="@Model.SelectedCategory">
+                            Price
+                        </a>
+                    </th>
+                    <th></th>
+                    <th></th>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.Name</td>
+                        <td class="text-end">@product.Price.ToString("C")</td>
+                        <td>
+                            <a asp-action="Details"
+                           asp-route-id="@product.ProductID"
+                           asp-route-slug="@product.Slug">View Details</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Cart" asp-action="Add"
+                           asp-route-id="@product.Slug">Add to Cart</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
